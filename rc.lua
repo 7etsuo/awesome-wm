@@ -17,12 +17,18 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+RC = {}
+
+-- Variables
+RC.vars = require("main.user-variables")
+
 -- Error handling
 require("main.error-handling")
 
--- Variables
-RC = {}
-RC.vars = require("main.user-variables")
+-- Themes
+beautiful.init("/home/snowcrash/.config/awesome/theme.lua")
+
+modkey = RC.vars.modkey
 
 -- Local Library
 local main = {
@@ -31,6 +37,14 @@ local main = {
   menu    = require("main.menu"),
   rules   = require("main.rules")
 }
+
+-- Local Library: Keys and Mouse Binding
+local binding = {
+  globalbuttons = require("binding.globalbuttons")
+}
+
+-- Set root
+root.buttons(binding.globalbuttons())
 
 -- Layouts
 RC.layouts = main.layouts()
@@ -171,11 +185,6 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-               awful.button({ }, 3, function () RC.mainmenu:toggle() end),
-               awful.button({ }, 4, awful.tag.viewnext),
-               awful.button({ }, 5, awful.tag.viewprev)
-))
 -- }}}
 
 -- {{{ Key bindings
