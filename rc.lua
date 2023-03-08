@@ -79,10 +79,11 @@ root.keys(RC.globalkeys)
 -- Keyboardmap indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+-- Statusbar: Wibar
+require("deco.statusbar")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -123,21 +124,6 @@ local tasklist_buttons = gears.table.join(
   awful.button({ }, 5, function ()
       awful.client.focus.byidx(-1)
 end))
-
-local function set_wallpaper(s)
-  -- Wallpaper
-  if beautiful.wallpaper then
-    local wallpaper = beautiful.wallpaper
-    -- If wallpaper is a function, call it with the screen
-    if type(wallpaper) == "function" then
-      wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
-  end
-end
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -189,11 +175,6 @@ awful.screen.connect_for_each_screen(function(s)
       },
     }
 end)
-
-
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
 
 -- Set keys
 root.keys(globalkeys)
