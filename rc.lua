@@ -28,7 +28,8 @@ RC.vars = require("main.user-variables")
 local main = {
   layouts = require("main.layouts"),
   tags    = require("main.tags"),
-  menu    = require("main.menu")
+  menu    = require("main.menu"),
+  rules   = require("main.rules")
 }
 
 -- Layouts
@@ -43,6 +44,14 @@ RC.launcher = awful.widget.launcher(
   { image = beautiful.awesome_icon, menu = RC.mainmenu }
 )
 menubar.utils.terminal = RC.vars.terminal
+
+-- Rules
+awful.rules.rules = main.rules(clientkeys, clientbuttons)
+-- TODO: once we fix binding
+-- awful.rules.rules = main.rules(
+--   binding.clientkeys(),
+--   binding.clientbuttons()
+-- )
 
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
@@ -378,66 +387,6 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
-
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
-  -- All clients will match this rule.
-  { rule = { },
-    properties = { border_width = beautiful.border_width,
-                   border_color = beautiful.border_normal,
-                   focus = awful.client.focus.filter,
-                   raise = true,
-                   keys = clientkeys,
-                   buttons = clientbuttons,
-                   screen = awful.screen.preferred,
-                   placement = awful.placement.no_overlap+awful.placement.no_offscreen
-    }
-  },
-
-  -- Floating clients.
-  { rule_any = {
-      instance = {
-        "DTA",  -- Firefox addon DownThemAll.
-        "copyq",  -- Includes session name in class.
-        "pinentry",
-      },
-      class = {
-        "Arandr",
-        "Blueman-manager",
-        "Gpick",
-        "Kruler",
-        "MessageWin",  -- kalarm.
-        "Sxiv",
-        "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "1password",
-        "Wpa_gui",
-        "veromix",
-        "xtightvncviewer"},
-
-      -- Note that the name property shown in xprop might be set slightly after creation of the client
-      -- and the name shown there might not match defined rules here.
-      name = {
-        "Event Tester",  -- xev.
-      },
-      role = {
-        "AlarmWindow",  -- Thunderbird's calendar.
-        "ConfigManager",  -- Thunderbird's about:config.
-        "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-      }
-  }, properties = { floating = true }},
-
-  -- Add titlebars to normal clients and dialogs
-  { rule_any = {type = { "normal", "dialog" }
-               }, properties = { titlebars_enabled = true }
-  },
-
-  -- Set Firefox to always map on the tag named "2" on screen 1.
-  -- { rule = { class = "Firefox" },
-  --   properties = { screen = 1, tag = "2" } },
-}
--- }}}
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
