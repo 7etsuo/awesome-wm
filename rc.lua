@@ -85,24 +85,6 @@ mytextclock = wibox.widget.textclock()
 -- Statusbar: Wibar
 require("deco.statusbar")
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-  awful.button({ }, 1, function(t) t:view_only() end),
-  awful.button({ RC.vars.modkey }, 1, function(t)
-      if client.focus then
-        client.focus:move_to_tag(t)
-      end
-  end),
-  awful.button({ }, 3, awful.tag.viewtoggle),
-  awful.button({ RC.vars.modkey }, 3, function(t)
-      if client.focus then
-        client.focus:toggle_tag(t)
-      end
-  end),
-  awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-  awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
-
 local tasklist_buttons = gears.table.join(
   awful.button({ }, 1, function (c)
       if c == client.focus then
@@ -126,9 +108,6 @@ local tasklist_buttons = gears.table.join(
 end))
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
-
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -146,12 +125,6 @@ awful.screen.connect_for_each_screen(function(s)
       buttons = taglist_buttons
     }
 
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-      screen  = s,
-      filter  = awful.widget.tasklist.filter.currenttags,
-      buttons = tasklist_buttons
-    }
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
