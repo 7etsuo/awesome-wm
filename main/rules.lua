@@ -6,7 +6,6 @@ local _M = {}
 -- reading
 -- https://awesomewm.org/apidoc/declarative_rules/ruled.client.html
 
-
 function _M.get(clientkeys, clientbuttons)
   local rules = {
     { rule = { },
