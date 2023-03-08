@@ -38,11 +38,12 @@ local main = {
   rules   = require("main.rules")
 }
 
+-- Custom Local Library: Keys and Mouse Binding
 local binding = {
   globalbuttons = require("binding.globalbuttons"),
   clientbuttons = require("binding.clientbuttons"),
   globalkeys    = require("binding.globalkeys"),
-  --  bindtotags    = require("binding.bindtotags"),
+  bindtotags    = require("binding.bindtotags"),
   clientkeys    = require("binding.clientkeys")
 }
 
@@ -63,14 +64,13 @@ menubar.utils.terminal = RC.vars.terminal
 RC.globalkeys = binding.globalkeys()
 
 -- Rules
-fawful.rules.rules = main.rules(
+awful.rules.rules = main.rules(
   binding.clientkeys(),
   binding.clientbuttons()
 )
 
 -- Signals
 require("main.signals")
-
 
 -- Set root
 root.buttons(binding.globalbuttons())
