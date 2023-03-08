@@ -17,11 +17,20 @@ M.awesome = {
   { "quit", function() awesome.quit() end },
 }
 
+M.favorite = {
+  { "firefox", "firefox", awful.util.getdir("config") .. "/firefox.png" },
+  { "&thunderbird", "thunderbird" },
+  { "&firefox", "firefox" },
+  { "emacs", "emacs" },
+  { "screenshooter", "xfce4-screenshooter" }
+}
+
 function _M.get()
 
   local menu_items = {
     { "awesome", M.awesome, beautiful.awesome_icon },
-    { "open terminal", RC.vars.terminal }
+    { "open terminal", RC.vars.terminal },
+    { "favorite", M.favorite }
   }
   return menu_items
 end
