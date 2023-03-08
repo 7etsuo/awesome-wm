@@ -40,7 +40,7 @@ local main = {
 
 -- Local Library: Keys and Mouse Binding
 local binding = {
-  globalbuttons = require("binding.globalbuttons")
+  globalbuttons = require("binding.bindtotags")
 }
 
 -- Set root
@@ -182,9 +182,6 @@ awful.screen.connect_for_each_screen(function(s)
       },
     }
 end)
--- }}}
-
--- {{{ Mouse bindings
 -- }}}
 
 -- {{{ Key bindings
