@@ -41,6 +41,7 @@ local main = {
 -- Local Library: Keys and Mouse Binding
 local binding = {
   globalbuttons = require("binding.bindtotags")
+  clientbuttons = require("bindings.clientbuttons")
 }
 
 -- Set root
@@ -60,12 +61,10 @@ RC.launcher = awful.widget.launcher(
 menubar.utils.terminal = RC.vars.terminal
 
 -- Rules
-awful.rules.rules = main.rules(clientkeys, clientbuttons)
--- TODO: once we fix binding
--- awful.rules.rules = main.rules(
---   binding.clientkeys(),
---   binding.clientbuttons()
--- )
+awful.rules.rules = main.rules(
+  binding.clientkeys(),
+  binding.clientbuttons()
+)
 
 -- Signals
 require("main.signals")
@@ -379,20 +378,6 @@ for i = 1, 9 do
                                   {description = "toggle focused client on tag #" .. i, group = "tag"})
   )
 end
-
-clientbuttons = gears.table.join(
-  awful.button({ }, 1, function (c)
-      c:emit_signal("request::activate", "mouse_click", {raise = true})
-  end),
-  awful.button({ RC.vars.modkey }, 1, function (c)
-      c:emit_signal("request::activate", "mouse_click", {raise = true})
-      awful.mouse.client.move(c)
-  end),
-  awful.button({ RC.vars.modkey }, 3, function (c)
-      c:emit_signal("request::activate", "mouse_click", {raise = true})
-      awful.mouse.client.resize(c)
-  end)
-)
 
 -- Set keys
 root.keys(globalkeys)
