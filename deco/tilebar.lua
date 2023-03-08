@@ -6,8 +6,6 @@ local awful = require("awful")
 -- Widget and layout library
 local wibox = require("wibox")
 
--- theme handling library
-local beautiful = require("beautiful")
 
 client.connect_signal("request::titlebars", function(c)
                         -- buttons for the titlebar
@@ -23,20 +21,20 @@ client.connect_signal("request::titlebars", function(c)
                         )
 
                         awful.titlebar(c) : setup {
-                          { -- Left
+                          { -- Left: Icon
                             awful.titlebar.widget.iconwidget(c),
                             buttons = buttons,
                             layout  = wibox.layout.fixed.horizontal
                           },
-                          { -- Middle
-                            { -- Title
+                          { -- Middle: Title
+                            {
                               align  = "center",
                               widget = awful.titlebar.widget.titlewidget(c)
                             },
                             buttons = buttons,
                             layout  = wibox.layout.flex.horizontal
                           },
-                          { -- Right
+                          { -- Buttons
                             awful.titlebar.widget.floatingbutton (c),
                             awful.titlebar.widget.maximizedbutton(c),
                             awful.titlebar.widget.stickybutton   (c),
